@@ -1,0 +1,33 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+
+group = 'org.virtue'
+version = '1.0-SNAPSHOT'
+
+description = """"""
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+
+
+repositories {
+        
+     maven { url "http://repo.maven.apache.org/maven2" }
+}
+
+dependencies{
+     compile group: 'cn.afterturn', name: 'easypoi-base', version: '3.0.3'
+
+// [图片]https://mvnrepository.com/artifact/cn.afterturn/easypoi-annotation
+     compile group: 'cn.afterturn', name: 'easypoi-annotation', version: '3.0.3'
+
+// [图片]https://mvnrepository.com/artifact/cn.afterturn/easypoi-web
+     compile group: 'cn.afterturn', name: 'easypoi-web', version: '3.0.3'
+     // https://mvnrepository.com/artifact/log4j/log4j
+     compile group: 'log4j', name: 'log4j', version: '1.2.4'
+     // https://mvnrepository.com/artifact/mysql/mysql-connector-java
+     compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.40'
+
+
+}
