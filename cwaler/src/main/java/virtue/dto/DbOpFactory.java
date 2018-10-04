@@ -1,7 +1,9 @@
 package virtue.dto;
 
 
+import virtue.pojo.AuctionItem;
 import virtue.pojo.Mortgage;
+import virtue.pojo.SearchTarget;
 
 import java.sql.*;
 
@@ -42,10 +44,15 @@ public class DbOpFactory {
         }
     }
 
+
+    /**
+     * 处理数据，并进行插入
+     * @param mortgage
+     */
     public void insert(Mortgage mortgage){
         try{
             // 执行查询
-            System.out.println(" 实例化Statement对象...");
+            //System.out.println(" 实例化Statement对象...");
             stmt = conn.createStatement();
             String sql;
             sql = String.format("INSERT INTO TB_MORTGAGE_INFO(MOR_HISRIGHT_NUMBER,MOR_OWNER_NAME,MOR_SECURITY_NUMBER,MOR_AREA,MOR_SERACH_TARGET) VALUES('%s','%s','%s','%s','%s')"
@@ -59,6 +66,52 @@ public class DbOpFactory {
             e.printStackTrace();
         }
     }
+
+    /**
+     * 持久化拍卖信息
+     * @param auctionItem
+     */
+    public void insertAuction(AuctionItem auctionItem){
+        try{
+            // 执行查询
+           // System.out.println(" 实例化Statement对象...");
+            stmt = conn.createStatement();
+            String sql;
+            sql = String.format("INSERT INTO TB_AUCTION_ITEM(AUCTION_PROVINCE,AUCTION_CITY,AUCTION_COUNTRY_NAME,AUCTION_DETAIL_TITLE,AUCTION_PRICE,AUCTION_DETAIL_URL) VALUES('%s','%s','%s','%s','%s','%s')"
+                    ,auctionItem.getProvince(),auctionItem.getCity(),auctionItem.getCountryName(),auctionItem.getDetailTitle(),auctionItem.getDetailPrice(),auctionItem.getDetailUrl());
+            stmt.executeUpdate(sql);
+        }catch(SQLException se){
+            // 处理 JDBC 错误
+            se.printStackTrace();
+        }catch(Exception e){
+            // 处理 Class.forName 错误
+            e.printStackTrace();
+        }
+    }
+
+
+    /**
+     * 持久化条件查询的拍卖信息
+     * TB_AUCTION_TARGET
+     */
+    public void insertAuctionTarget(SearchTarget searchTarget){
+        try{
+            // 执行查询
+            //System.out.println(" 实例化Statement对象...");
+            stmt = conn.createStatement();
+            String sql;
+            sql = String.format("INSERT INTO TB_AUCTION_TARGET(AUCTION_DETAIL_TITLE,AUCTION_DETAIL_PRICE,AUCTION_DETAIL_URL) VALUES('%s','%s','%s')"
+                    ,searchTarget.getDetailTitle(),searchTarget.getDetailPrice(),searchTarget.getDetailUrl());
+            stmt.executeUpdate(sql);
+        }catch(SQLException se){
+            // 处理 JDBC 错误
+            se.printStackTrace();
+        }catch(Exception e){
+            // 处理 Class.forName 错误
+            e.printStackTrace();
+        }
+    }
+
 
     public void close(){
         // 完成后关闭

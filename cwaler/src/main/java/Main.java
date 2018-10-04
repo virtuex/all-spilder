@@ -10,6 +10,9 @@ import javax.xml.crypto.Data;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 数据处理类
+ */
 public class Main {
     public static void main(String[] args) throws Exception {
         List<Mortgage> mortgages = PoiUtils.importExcel("file/info.xlsx", 0, 1, Mortgage.class);

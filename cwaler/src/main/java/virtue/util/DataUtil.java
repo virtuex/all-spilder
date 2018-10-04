@@ -1,9 +1,13 @@
 package virtue.util;
 
+
 import org.junit.Test;
 
 import java.beans.Transient;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -105,9 +109,41 @@ public class DataUtil {
         return values;
     }
 
+    public static Matcher getValueByReg(String regex,String resource){
+        Pattern p = Pattern.compile(regex);//���2��ָ�������ֵ����ٸ���
+        Matcher m = p.matcher(resource);
+        return m;
+    }
+
+    /**
+     * 获取src的值
+     * @param htmlStr
+     * @return
+     */
+    public static List<String> getSrc(String htmlStr) {
+        String img = "";
+        Pattern p_image;
+        Matcher m_image;
+        List<String> pics = new ArrayList<String>();
+//		 String regEx_img = "<img.*src=(.*?)[^>]*?>"; //pdf链接地址
+        String regEx_img = "<iframe.*src\\s*=\\s*(.*?)[^>]*?>";
+        p_image = Pattern.compile(regEx_img, Pattern.CASE_INSENSITIVE);
+        m_image = p_image.matcher(htmlStr);
+        while (m_image.find()) {
+            img = img + "," + m_image.group();
+            // Matcher m =
+            // Pattern.compile("src=\"?(.*?)(\"|>|\\s+)").matcher(img); //匹配src
+            Matcher m = Pattern.compile("src\\s*=\\s*\"?(.*?)(\"|>|\\s+)").matcher(img);
+            while (m.find()) {
+                pics.add(m.group(1));
+            }
+        }
+        return pics;
+    }
+
+
+
     @Test
     public void test(){
-        Pattern p = Pattern.compile("[1-2][0-9][0-9][0-9]");//���2��ָ�������ֵ����ٸ���
-        Matcher m = p.matcher("苏房权证相城字第30171517号");
     }
 }
